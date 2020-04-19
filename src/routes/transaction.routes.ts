@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import TransactionsRepository from '../repositories/TransactionsRepository';
 import CreateTransactionService from '../services/CreateTransactionService';
+import Transaction from '../models/Transaction';
 
 const transactionRouter = Router();
 
@@ -18,8 +19,10 @@ transactionRouter.get('/', (request, response) => {
 
 transactionRouter.post('/', (request, response) => {
   try {
-    const transaction = request.body;
+    const { title, value, type } = request.body;
+    const transaction: Transaction = { title, value, type };
     const service = new CreateTransactionService(transactionsRepository);
+    return service.execute(transaction);
   } catch (err) {
     return response.status(400).json({ error: err.message });
   }
