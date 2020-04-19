@@ -22,9 +22,10 @@ transactionRouter.post('/', (request, response) => {
     const { title, value, type } = request.body;
     const transaction: Transaction = { title, value, type };
     const service = new CreateTransactionService(transactionsRepository);
-    return service.execute(transaction);
+    const createdService = service.execute(transaction);
+    response.json(createdService);
   } catch (err) {
-    return response.status(400).json({ error: err.message });
+    response.status(400).json({ error: err.message });
   }
 });
 
