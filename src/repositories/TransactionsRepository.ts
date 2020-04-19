@@ -32,8 +32,9 @@ class TransactionsRepository {
   }
 
   public create(transaction: Transaction): Transaction {
-    this.transactions.push(transaction);
-    return transaction;
+    const savedTransaction = new Transaction(transaction);
+    this.transactions.push(savedTransaction);
+    return savedTransaction;
   }
 }
 
